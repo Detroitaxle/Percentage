@@ -1,251 +1,309 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Percentage Calculator — Detroit Axle</title>
-
-  <!-- Favicon: small SVG percent sign -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23221f1f'/%3E%3Ctext x='50' y='55' font-size='52' text-anchor='middle' font-family='Arial, Helvetica, sans-serif' fill='%23ff8c00' font-weight='700'%3E%25%3C/text%3E%3C/svg%3E" />
-
-  <style>
-    :root{
-      --bg:#0f1112;
-      --card:#131516;
-      --muted:#9aa2a6;
-      --accent:#ff8c00; /* dark orange */
-      --accent-2:#ffb36b;
-      --success:#1bbf7a;
-      --radius:14px;
-      --glass: rgba(255,255,255,0.03);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
-      background: linear-gradient(180deg,#070708 0%, #0c0d0e 100%);
-      color:#e6e8e8;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:28px;
-    }
-
-    .wrap{width:100%;max-width:860px}
-
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:var(--radius);
-      padding:28px;
-      display:grid;
-      grid-template-columns: 1fr 420px;
-      gap:20px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-      border:1px solid rgba(255,255,255,0.03);
-    }
-
-    h1{margin:0 0 8px 0;font-size:20px}
-    p.lead{color:var(--muted);margin:0 0 18px 0}
-
-    .form{display:flex;flex-direction:column;gap:12px}
-    label{font-size:13px;color:var(--muted)}
-    input[type=number]{
-      -moz-appearance: textfield;
-      appearance: none;
-      padding:12px 14px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,0.03);
-      background:var(--card);
-      color:inherit;
-      font-size:16px;
-      outline:none;
-    }
-    input[type=number]::placeholder{color:rgba(230,230,230,0.25)}
-
-    .controls{display:flex;gap:10px;align-items:center}
-    button{cursor:pointer;border:0;padding:10px 14px;border-radius:12px;font-weight:600}
-    .btn-calc{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#1a0d00}
-    .btn-clear{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.03)}
-
-    /* result area */
-    .result{
-      background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
-      border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px;align-items:stretch
-    }
-    .big{
-      display:flex;align-items:center;justify-content:space-between;gap:12px
-    }
-    .value-box{
-      background:linear-gradient(90deg, rgba(255,140,0,0.08), rgba(255,179,107,0.03));
-      padding:18px;border-radius:12px;min-width:0
-    }
-    .value-main{font-size:26px;font-weight:700;letter-spacing:0.4px;word-break:break-all}
-    .value-sub{color:var(--muted);font-size:13px;margin-top:6px}
-
-    .copy-row{display:flex;gap:8px;align-items:center}
-    .copy-btn{padding:10px 12px;border-radius:10px;background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.02);color:var(--accent);font-weight:700}
-
-    .note{font-size:13px;color:var(--muted)}
-
-    footer{font-size:12px;color:var(--muted);margin-top:14px}
-
-    /* responsive */
-    @media (max-width:900px){
-      .card{grid-template-columns:1fr;}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Percentage Calculator</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='darkorange'/><text x='50' y='65' font-size='40' text-anchor='middle' fill='white'>%</text></svg>">
+    <style>
+        :root {
+            --primary-color: #ff8c00;
+            --dark-bg: #1a1a1a;
+            --darker-bg: #121212;
+            --card-bg: #2d2d2d;
+            --text-color: #f0f0f0;
+            --border-color: #444;
+            --success-color: #4CAF50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid var(--border-color);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--darker-bg);
+            color: var(--text-color);
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .copy-btn:hover {
+            background-color: #e67e00;
+        }
+        
+        .copy-btn.copied {
+            background-color: var(--success-color);
+        }
+        
+        .clear-btn {
+            background-color: #555;
+            color: white;
+        }
+        
+        .clear-btn:hover {
+            background-color: #666;
+        }
+        
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: var(--darker-bg);
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        
+        .result-label {
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #aaa;
+        }
+        
+        .percentage {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary-color);
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .formula {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #aaa;
+            text-align: center;
+        }
+        
+        .error {
+            color: #ff6b6b;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="card">
-      <div>
-        <h1>Percentage calculator</h1>
-        <p class="lead">Enter the <strong>Order Amount</strong> and the <strong>Deduction Value</strong>. The tool calculates a percentage you can use in the formula <code>Order amount * percentage = Deduction Value</code>.</p>
-
-        <div class="form" id="form">
-          <div>
-            <label for="order">Order Amount</label>
-            <input id="order" type="number" inputmode="decimal" placeholder="e.g. 150.00" step="0.01" min="0" />
-          </div>
-
-          <div>
-            <label for="deduction">Deduction Value</label>
-            <input id="deduction" type="number" inputmode="decimal" placeholder="e.g. 22.50" step="0.01" min="0" />
-          </div>
-
-          <div class="controls">
-            <button id="calc" class="btn-calc">Calculate</button>
-            <button id="clear" class="btn-clear">Clear</button>
-          </div>
+    <div class="container">
+        <h1>Percentage Calculator</h1>
+        
+        <div class="form-group">
+            <label for="orderAmount">Order Amount</label>
+            <input type="number" id="orderAmount" placeholder="Enter order amount" step="0.01" min="0">
+            <div class="error" id="orderAmountError">Please enter a valid order amount</div>
         </div>
-
-        <footer>
-          Tip: The value copied by default is the <strong>decimal percentage</strong> (for example <code>0.15</code>) which you can plug directly into <code>Order * percentage</code>. You can also copy the percent form (<code>15%</code>).
-        </footer>
-      </div>
-
-      <div>
-        <div class="result" aria-live="polite">
-          <div class="big">
-            <div style="flex:1">
-              <div class="value-box">
-                <div class="value-main" id="decimal">—</div>
-                <div class="value-sub">Decimal percentage (for formula): <code id="decimal-code">—</code></div>
-              </div>
-            </div>
-            <div style="width:12px"></div>
-            <div style="width:170px">
-              <div class="value-box">
-                <div class="value-main" id="percent">—</div>
-                <div class="value-sub">Percent form</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="copy-row">
-            <button id="copy-decimal" class="copy-btn">Copy decimal</button>
-            <button id="copy-percent" class="copy-btn">Copy percent</button>
-            <div style="margin-left:auto" class="note" id="msg">&nbsp;</div>
-          </div>
-
-          <div class="note">Validation: If Order Amount is zero or empty, the percentage is undefined.</div>
+        
+        <div class="form-group">
+            <label for="deductionValue">Deduction Value</label>
+            <input type="number" id="deductionValue" placeholder="Enter deduction value" step="0.01" min="0">
+            <div class="error" id="deductionValueError">Please enter a valid deduction value</div>
         </div>
-      </div>
+        
+        <div class="result">
+            <div class="result-label">Percentage</div>
+            <div class="percentage" id="percentageResult">00.00</div>
+        </div>
+        
+        <div class="buttons">
+            <button class="copy-btn" id="copyBtn">Copy Percentage</button>
+            <button class="clear-btn" id="clearBtn">Clear All</button>
+        </div>
+        
+        <div class="formula">
+            Formula: Order Amount × Percentage = Deduction Value
+        </div>
     </div>
-  </div>
+    
+    <footer>
+        &copy; 2023 Percentage Calculator
+    </footer>
 
-  <script>
-    const order = document.getElementById('order');
-    const deduction = document.getElementById('deduction');
-    const calc = document.getElementById('calc');
-    const clear = document.getElementById('clear');
-    const decimalEl = document.getElementById('decimal');
-    const percentEl = document.getElementById('percent');
-    const decimalCode = document.getElementById('decimal-code');
-    const copyDecimal = document.getElementById('copy-decimal');
-    const copyPercent = document.getElementById('copy-percent');
-    const msg = document.getElementById('msg');
-
-    function compute(){
-      const A = parseFloat(order.value);
-      const D = parseFloat(deduction.value);
-      if (!A || A === 0 || isNaN(A)){
-        decimalEl.textContent = '—';
-        percentEl.textContent = '—';
-        decimalCode.textContent = '—';
-        showMessage('Enter a valid Order Amount > 0', true);
-        return;
-      }
-      if (isNaN(D)){
-        decimalEl.textContent = '—';
-        percentEl.textContent = '—';
-        decimalCode.textContent = '—';
-        showMessage('Enter a valid Deduction Value', true);
-        return;
-      }
-
-      let p_decimal = D / A;
-      let p_percent = p_decimal * 100;
-
-      // format to two decimals (truncate, not round)
-      function formatTwoDecimals(val){
-        let s = val.toString();
-        if(s.includes('.')){
-          let [intPart, decPart] = s.split('.');
-          decPart = decPart.slice(0,2); // cut off anything beyond 2 decimals
-          return intPart + (decPart ? '.'+decPart : '');
-        }
-        return s;
-      }
-
-      let p_decimal_str = formatTwoDecimals(p_decimal);
-      let p_percent_str = formatTwoDecimals(p_percent);
-
-      decimalEl.textContent = p_decimal_str;
-      decimalCode.textContent = p_decimal_str;
-      percentEl.textContent = p_percent_str + '%';
-      showMessage('Calculated', false);
-    }
-
-    function showMessage(s, isError){
-      msg.textContent = s;
-      msg.style.color = isError ? '#ff6b6b' : 'var(--accent)';
-      setTimeout(()=>{ msg.textContent = '\u00A0'; }, 2400);
-    }
-
-    calc.addEventListener('click', compute);
-    clear.addEventListener('click', ()=>{ order.value=''; deduction.value=''; decimalEl.textContent='—'; percentEl.textContent='—'; decimalCode.textContent='—'; showMessage('Cleared', false); });
-
-    [order, deduction].forEach(el=>el.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); compute(); } }));
-
-    async function copyText(text){
-      try{
-        await navigator.clipboard.writeText(text);
-        showMessage('Copied', false);
-      }catch(e){
-        const ta = document.createElement('textarea');
-        ta.value = text; document.body.appendChild(ta); ta.select();
-        try{ document.execCommand('copy'); showMessage('Copied (fallback)', false); }catch(err){ showMessage('Copy failed', true); }
-        ta.remove();
-      }
-    }
-
-    copyDecimal.addEventListener('click', ()=>{
-      const val = decimalCode.textContent;
-      if (!val || val === '—') { showMessage('No value to copy', true); return; }
-      copyText(val);
-    });
-
-    copyPercent.addEventListener('click', ()=>{
-      const val = percentEl.textContent.replace('%','');
-      if (!val || val === '—') { showMessage('No value to copy', true); return; }
-      copyText(val);
-    });
-
-    [order,deduction].forEach(el=>el.addEventListener('input', ()=>{
-      if (order.value.trim() !== '' && deduction.value.trim() !== '') compute();
-    }));
-  </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const orderAmountInput = document.getElementById('orderAmount');
+            const deductionValueInput = document.getElementById('deductionValue');
+            const percentageResult = document.getElementById('percentageResult');
+            const copyBtn = document.getElementById('copyBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const orderAmountError = document.getElementById('orderAmountError');
+            const deductionValueError = document.getElementById('deductionValueError');
+            
+            // Add event listeners for input changes
+            orderAmountInput.addEventListener('input', calculatePercentage);
+            deductionValueInput.addEventListener('input', calculatePercentage);
+            
+            // Copy button functionality
+            copyBtn.addEventListener('click', function() {
+                const percentage = percentageResult.textContent;
+                navigator.clipboard.writeText(percentage).then(function() {
+                    // Visual feedback for successful copy
+                    copyBtn.textContent = 'Copied!';
+                    copyBtn.classList.add('copied');
+                    
+                    setTimeout(function() {
+                        copyBtn.textContent = 'Copy Percentage';
+                        copyBtn.classList.remove('copied');
+                    }, 2000);
+                }).catch(function(err) {
+                    console.error('Failed to copy: ', err);
+                });
+            });
+            
+            // Clear button functionality
+            clearBtn.addEventListener('click', function() {
+                orderAmountInput.value = '';
+                deductionValueInput.value = '';
+                percentageResult.textContent = '00.00';
+                
+                // Hide any error messages
+                orderAmountError.style.display = 'none';
+                deductionValueError.style.display = 'none';
+                
+                // Focus on the first input
+                orderAmountInput.focus();
+            });
+            
+            function calculatePercentage() {
+                // Reset errors
+                orderAmountError.style.display = 'none';
+                deductionValueError.style.display = 'none';
+                
+                // Get values
+                const orderAmount = parseFloat(orderAmountInput.value);
+                const deductionValue = parseFloat(deductionValueInput.value);
+                
+                // Validate inputs
+                let hasError = false;
+                
+                if (orderAmountInput.value && (isNaN(orderAmount) || orderAmount <= 0)) {
+                    orderAmountError.style.display = 'block';
+                    hasError = true;
+                }
+                
+                if (deductionValueInput.value && (isNaN(deductionValue) || deductionValue < 0)) {
+                    deductionValueError.style.display = 'block';
+                    hasError = true;
+                }
+                
+                if (hasError) {
+                    percentageResult.textContent = '00.00';
+                    return;
+                }
+                
+                // Check if both values are provided
+                if (!orderAmountInput.value || !deductionValueInput.value) {
+                    percentageResult.textContent = '00.00';
+                    return;
+                }
+                
+                // Check if deduction is greater than order amount
+                if (deductionValue > orderAmount) {
+                    deductionValueError.textContent = 'Deduction cannot be greater than order amount';
+                    deductionValueError.style.display = 'block';
+                    percentageResult.textContent = '00.00';
+                    return;
+                }
+                
+                // Calculate percentage: (Deduction Value / Order Amount) * 100
+                let percentage = (deductionValue / orderAmount) * 100;
+                
+                // Format to 2 decimal places, discarding anything after
+                percentage = percentage.toFixed(2);
+                
+                // Display result
+                percentageResult.textContent = percentage;
+            }
+        });
+    </script>
 </body>
 </html>
